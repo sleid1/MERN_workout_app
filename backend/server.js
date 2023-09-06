@@ -19,8 +19,8 @@ app.use(express.json());
 
 //Middleware to log the path and method of incoming requests
 app.use((req, res, next) => {
-    console.log(req.path, req.method);
-    next();
+   console.log(req.path, req.method);
+   next();
 });
 
 // Use routes from the Router
@@ -28,18 +28,16 @@ app.use('/api/workouts', workoutRoutes);
 
 // CONNECT TO DB
 mongoose
-    .connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() => {
-        //Listening for request
-        app.listen(process.env.PORT, () => {
-            console.log(
-                `Connected to DB & listening on port ${process.env.PORT}`
-            );
-        });
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+   .connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+   })
+   .then(() => {
+      //Listening for request
+      app.listen(process.env.PORT, () => {
+         console.log(`Connected to DB & listening on port ${port}`);
+      });
+   })
+   .catch((error) => {
+      console.log(error);
+   });
