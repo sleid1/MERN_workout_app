@@ -7,7 +7,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 // Require routes from the Router
+//Workout Routes
 const workoutRoutes = require('./routes/workouts');
+//User Routes
+const userRoutes = require('./routes/user');
 
 // Creating express app inside app constant
 const app = express();
@@ -25,6 +28,7 @@ app.use((req, res, next) => {
 
 // Use routes from the Router
 app.use('/api/workouts', workoutRoutes);
+app.use('/api/user', userRoutes);
 
 // CONNECT TO DB
 mongoose
