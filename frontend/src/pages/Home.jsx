@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'; // CONTEXT
+import { useAuthContext } from '../hooks/useAuthContext';
 
 //COMPONENTS
 import WorkoutDetails from '../components/WorkoutDetails';
@@ -8,11 +9,16 @@ import WorkoutForm from '../components/WorkoutForm';
 const Home = () => {
    // const [workouts, setWorkouts] = useState([]); NOT NEEDED BECAUSE OF CONTEXT
    const { workouts, dispatch } = useWorkoutsContext();
+   const { user } = useAuthContext();
 
    useEffect(() => {
       const fetchWorkouts = async () => {
          try {
-            const res = await fetch('/api/workouts');
+            const res = await fetch('/api/workouts', {
+               headers: {
+                  Authorization: `Bearer ${user.token}`,
+               },
+            });
 
             if (!res.ok) {
                throw new Error('Network response was not ok');
@@ -28,8 +34,11 @@ const Home = () => {
             );
          }
       };
-      fetchWorkouts();
-   }, [dispatch]);
+
+      if (user) {
+         fetchWorkouts();
+      }
+   }, [dispatch, user]);
 
    return (
       <div className="home">
