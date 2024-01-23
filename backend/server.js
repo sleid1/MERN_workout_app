@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const cors = require('cors');
 // Require express package
 const express = require('express');
 
@@ -15,6 +16,14 @@ const userRoutes = require('./routes/user');
 // Creating express app inside app constant
 const app = express();
 const port = process.env.PORT || 4000;
+// Allow requests from the frontend domain
+const corsOptions = {
+   origin: 'https://mernworkoutapp.netlify.app',
+   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+   optionsSuccessStatus: 204,
+};
+
+app.use(cors(corsOptions));
 
 //MIDDLEWARE
 //Middleware to parse and get data from the request body
